@@ -4,7 +4,7 @@ import NoteListContent from "./NoteListContent";
 function NoteList({ activeNotes, archiveNotes, onDelete, onArchive }) {
   return (
     <>
-      <section className="note-app__body">
+      <section>
         <h2>Catatan Aktif</h2>
         <NoteListContent
           notes={activeNotes}
@@ -12,7 +12,7 @@ function NoteList({ activeNotes, archiveNotes, onDelete, onArchive }) {
           onArchive={onArchive}
         />
       </section>
-      <section className="note-app__body">
+      <section>
         <h2>Arsip</h2>
         <NoteListContent
           notes={archiveNotes}

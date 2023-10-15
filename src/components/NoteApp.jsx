@@ -92,13 +92,13 @@ class NoteApp extends React.Component {
             <h2>Buat Catatan</h2>
             <NoteInput addNote={this.onAddNoteHandler} />
           </div>
+          <NoteList
+            activeNotes={activeNotes}
+            archiveNotes={archiveNotes}
+            onDelete={this.onDeleteHandler}
+            onArchive={this.onArchiveHandler}
+          />
         </section>
-        <NoteList
-          activeNotes={activeNotes}
-          archiveNotes={archiveNotes}
-          onDelete={this.onDeleteHandler}
-          onArchive={this.onArchiveHandler}
-        />
       </>
     );
   }
