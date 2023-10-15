@@ -2,6 +2,7 @@ import React from "react";
 import { getInitialData } from "../utils";
 import NoteList from "./NoteList";
 import NoteInput from "./NoteInput";
+import NoteHeader from "./NoteHeader";
 
 class NoteApp extends React.Component {
   constructor(props) {
@@ -9,11 +10,13 @@ class NoteApp extends React.Component {
 
     this.state = {
       notes: getInitialData(),
+      search: "",
     };
 
     this.onDeleteHandler = this.onDeleteHandler.bind(this);
     this.onArchiveHandler = this.onArchiveHandler.bind(this);
     this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
+    this.onSearchHandler = this.onSearchHandler.bind(this);
   }
 
   onDeleteHandler(id) {
@@ -58,15 +61,32 @@ class NoteApp extends React.Component {
     });
   }
 
+  onSearchHandler(event) {
+    const searchValue = event.target.value.toLowerCase();
+    console.log("Search Value:", searchValue);
+    this.setState({ search: searchValue });
+  }
+
   render() {
-    const activeNotes = this.state.notes.filter(
-      (note) => note.archived === false
-    );
-    const archiveNotes = this.state.notes.filter(
-      (note) => note.archived === true
-    );
+    const activeNotes = this.state.notes.filter((note) => {
+      return (
+        !note.archived &&
+        (note.title.toLowerCase().includes(this.state.search) ||
+          note.body.toLowerCase().includes(this.state.search))
+      );
+    });
+
+    const archiveNotes = this.state.notes.filter((note) => {
+      return (
+        note.archived &&
+        (note.title.toLowerCase().includes(this.state.search) ||
+          note.body.toLowerCase().includes(this.state.search))
+      );
+    });
+
     return (
       <>
+        <NoteHeader onSearch={this.onSearchHandler} />
         <section className="note-app__body">
           <div className="note-input">
             <h2>Buat Catatan</h2>
